@@ -7,6 +7,18 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+
+// Define the database URL to connect to.
+const mongoDB = "mongodb+srv://amoreemb:amrmohamed@cluster0.cjk69dg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Wait for database to connect, logging an error if there is a problem
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+
 const app = express();
 
 // view engine setup
