@@ -8,3 +8,5 @@ const CommentSchema = Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   created_at: { type: Date, default: Date.now() },
 });
+
+mongoose.exports = mongoose.model("Comment", CommentSchema);

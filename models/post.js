@@ -7,6 +7,7 @@ const PostSchema = new Schema({
   text: { type: String, minLength: 1, maxLength: 280, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User" },
   created_at: { type: Date, default: Date.now() },
+  public: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model("Post", PostSchema);
