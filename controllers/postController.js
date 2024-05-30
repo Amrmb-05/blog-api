@@ -54,8 +54,8 @@ exports.update_post = [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const updatedPost = await Post.findByIdAndUpdate(req.params.id, post, {});
-    res.status(200).json(updatedPost);
+    await Post.findByIdAndUpdate(req.params.id, post, {});
+    res.status(200).json(post);
   }),
 ];
 
