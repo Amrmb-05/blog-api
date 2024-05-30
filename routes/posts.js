@@ -13,3 +13,8 @@ router.post("/", post_controller.create_post);
 
 // Update Post
 router.put("/:id", post_controller.update_post);
+
+// Delete Post
+router.delete("/:id", post_controller.delete_post);
+
+module.exports = router;

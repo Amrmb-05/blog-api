@@ -19,7 +19,7 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
 
 exports.create_post = [
   body("title", "title must not be empty").trim().isLength({ min: 1 }).escape(),
-  body("text", "Post must not be empty").trim.isLength({ min: 1 }).escape(),
+  body("text", "Post must not be empty").trim().isLength({ min: 1 }).escape(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -40,7 +40,7 @@ exports.create_post = [
 
 exports.update_post = [
   body("title", "title must not be empty").trim().isLength({ min: 1 }).escape(),
-  body("text", "Post must not be empty").trim.isLength({ min: 1 }).escape(),
+  body("text", "Post must not be empty").trim().isLength({ min: 1 }).escape(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -58,3 +58,12 @@ exports.update_post = [
     res.status(200).json(updatedPost);
   }),
 ];
+
+exports.delete_post = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id).exec();
+  if (post === null) {
+    return res.status(404).json({ error: "Resource not found" });
+  }
+  const deletedPost = await Post.findByIdAndDelete(req.params.id);
+  res.status(200).json(deletedPost);
+});
