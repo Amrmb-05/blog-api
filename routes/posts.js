@@ -7,3 +7,6 @@ router.get("/", post_controller.posts_list);
 
 // Get Single Post
 router.get("/:id", post_controller.post_detail);
+
+// Create New Post
+router.post("/", post_controller.create_post);
