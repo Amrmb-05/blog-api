@@ -37,3 +37,24 @@ exports.create_post = [
     res.status(201).json(post);
   }),
 ];
+
+exports.update_post = [
+  body("title", "title must not be empty").trim().isLength({ min: 1 }).escape(),
+  body("text", "Post must not be empty").trim.isLength({ min: 1 }).escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const post = new Post({
+      title: req.body.title,
+      text: req.body.text,
+      _id: req.params.id,
+    });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(req.params.id, post, {});
+    res.status(200).json(updatedPost);
+  }),
+];

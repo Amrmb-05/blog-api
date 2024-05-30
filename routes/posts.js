@@ -10,3 +10,6 @@ router.get("/:id", post_controller.post_detail);
 
 // Create New Post
 router.post("/", post_controller.create_post);
+
+// Update Post
+router.put("/:id", post_controller.update_post);
