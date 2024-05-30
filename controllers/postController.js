@@ -33,7 +33,7 @@ exports.create_post = [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    await Post.save(post);
+    await post.save();
     res.status(201).json(post);
   }),
 ];
