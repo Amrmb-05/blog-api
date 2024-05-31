@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 exports.sign_up = [
   body("username", "Username must be atleast 2 characters long")
@@ -56,4 +58,16 @@ exports.sign_up = [
   }),
 ];
 
-exports.log_in = [body("username")];
+exports.log_in = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(400).json({ error: "Incorrect username or password" });
+    }
+    jwt.sign({ user }, "mb", (err, token) => {
+      res.json({ message: "Success", token });
+    });
+  })(req, res, next);
+};

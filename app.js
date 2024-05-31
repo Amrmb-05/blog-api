@@ -7,6 +7,7 @@ const logger = require("morgan");
 const postsRouter = require("./routes/posts");
 const indexRouter = require("./routes/index");
 const mongoose = require("mongoose");
+const passport = require("passport");
 mongoose.set("strictQuery", false);
 
 // Define the database URL to connect to.
@@ -20,9 +21,10 @@ async function main() {
 }
 
 const app = express();
-
+require("./config/passport-login");
+app.use(passport.initialize());
 app.use(logger("dev"));
-// app.use(express.json());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
