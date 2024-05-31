@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 exports.sign_up = [
   body("username", "Username must be atleast 2 characters long")
     .trim()
-    .isLength()
+    .isLength({ min: 2 })
     .escape()
     .custom(async (value) => {
       const existingUser = await User.findOne({ username: value });
@@ -55,3 +55,5 @@ exports.sign_up = [
     res.status(200).json({ user });
   }),
 ];
+
+exports.log_in = [body("username")];
