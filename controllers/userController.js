@@ -47,7 +47,7 @@ exports.sign_up = [
       password: req.body.password,
     });
 
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
