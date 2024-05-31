@@ -9,4 +9,4 @@ const UserSchema = Schema({
   author: { type: Boolean, default: false },
 });
 
-mongoose.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
