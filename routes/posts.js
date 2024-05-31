@@ -20,4 +20,9 @@ router.delete("/:id", post_controller.delete_post);
 // Post Comment
 router.post("/:id/comments", comment_controller.create_comment);
 
+// Delete Comment
+router.delete(
+  "/:postId/comments/:commentId",
+  comment_controller.delete_comment
+);
 module.exports = router;
