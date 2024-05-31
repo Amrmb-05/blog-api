@@ -35,3 +35,23 @@ exports.create_comment = [
     res.status(201).json(comment);
   }),
 ];
+
+exports.delete_comment = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.postId).exec();
+
+  if (post === null) {
+    return res.status(404).json({ error: "Post not found" });
+  }
+  const comment = await Comment.findById(req.params.commentId).exec();
+
+  if (comment === null) {
+    return res.status(404).json({ error: "Comment not found" });
+  }
+  await Promise.all([
+    Comment.findByIdAndDelete(req.params.commentId),
+    Post.findByIdAndUpdate(req.params.postId, {
+      $pull: { comments: comment._id },
+    }),
+  ]);
+  res.status(200).json(comment);
+});
