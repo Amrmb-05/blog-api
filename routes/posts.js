@@ -4,7 +4,7 @@ const post_controller = require("../controllers/postController");
 const comment_controller = require("../controllers/commentController");
 const passport = require("passport");
 // Get All Posts
-router.get("/", post_controller.posts_list);
+router.get("/", post_controller.public_posts_list);
 
 // Get Single Post
 router.get("/:id", post_controller.post_detail);

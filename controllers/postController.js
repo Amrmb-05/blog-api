@@ -3,8 +3,8 @@ const Comment = require("../models/comment");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
-exports.posts_list = asyncHandler(async (req, res, next) => {
-  const posts = await Post.find({}).exec();
+exports.public_posts_list = asyncHandler(async (req, res, next) => {
+  const posts = await Post.find({ public: true }).exec();
   res.json(posts);
 });
 
