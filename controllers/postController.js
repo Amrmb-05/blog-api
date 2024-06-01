@@ -8,6 +8,16 @@ exports.public_posts_list = asyncHandler(async (req, res, next) => {
   res.json(posts);
 });
 
+exports.all_posts = asyncHandler(async (req, res, next) => {
+  if (!req.user.author) {
+    return res
+      .status(401)
+      .json({ message: "Only authors are allowed to view all posts" });
+  }
+  const posts = await Post.find({}).exec();
+  res.json(posts);
+});
+
 exports.post_detail = asyncHandler(async (req, res, next) => {
   const post = await Post.findById(req.params.id).exec();
 
