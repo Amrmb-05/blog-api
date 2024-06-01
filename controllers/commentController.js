@@ -47,6 +47,9 @@ exports.delete_comment = asyncHandler(async (req, res, next) => {
   if (comment === null) {
     return res.status(404).json({ error: "Comment not found" });
   }
+  if (!comment.user.equals(req.user._id) && !req.user.author) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
   await Promise.all([
     Comment.findByIdAndDelete(req.params.commentId),
     Post.findByIdAndUpdate(req.params.postId, {

@@ -53,7 +53,9 @@ exports.update_post = [
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+    if (!post.user.equals(req.user._id) && !req.user.author) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
     await Post.findByIdAndUpdate(req.params.id, post, {});
     res.status(200).json(post);
   }),
@@ -63,6 +65,10 @@ exports.delete_post = asyncHandler(async (req, res, next) => {
   const post = await Post.findById(req.params.id).exec();
   if (post === null) {
     return res.status(404).json({ error: "Resource not found" });
+  }
+
+  if (!post.user.equals(req.user._id) && !req.user.author) {
+    return res.status(401).json({ error: "Unauthorized" });
   }
   const deletedPost = await Post.findByIdAndDelete(req.params.id);
   res.status(200).json(deletedPost);
