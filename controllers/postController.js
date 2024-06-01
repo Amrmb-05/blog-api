@@ -24,6 +24,12 @@ exports.create_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    // check if user is an author
+    if (!req.user.author) {
+      return res
+        .status(401)
+        .json({ message: "Only blog authors are allowed to post" });
+    }
     const post = new Post({
       title: req.body.title,
       text: req.body.text,
