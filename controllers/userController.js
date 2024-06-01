@@ -66,8 +66,8 @@ exports.log_in = (req, res, next) => {
     if (!user) {
       return res.status(400).json({ error: "Incorrect username or password" });
     }
-    jwt.sign({ user }, "mb", (err, token) => {
-      res.json({ message: "Success", token });
-    });
+    const payload = { sub: user._id };
+    const token = jwt.sign(payload, "mb");
+    return res.json({ token, payload });
   })(req, res, next);
 };
