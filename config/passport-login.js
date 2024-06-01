@@ -9,7 +9,6 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 passport.use(
   new LocalStrategy(
     asyncHandler(async (username, password, done) => {
-      console.log("amr");
       const user = await User.findOne({ username: username });
       if (!user) {
         return done(null, false, {
@@ -34,8 +33,6 @@ const opts = {
 
 passport.use(
   new JwtStrategy(opts, (payload, done) => {
-    console.log("jwt");
-    console.log(payload.sub);
     User.findById(payload.sub)
       .then((user) => {
         if (user) {
