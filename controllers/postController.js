@@ -14,7 +14,7 @@ exports.all_posts = asyncHandler(async (req, res, next) => {
       .status(401)
       .json({ message: "Only authors are allowed to view all posts" });
   }
-  const posts = await Post.find({}).exec();
+  const posts = await Post.find({}).populate("comments").exec();
   res.json(posts);
 });
 
