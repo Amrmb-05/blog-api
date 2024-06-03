@@ -21,7 +21,7 @@ async function main() {
 }
 
 const app = express();
-app.use(cors);
+app.use(cors());
 require("./config/passport-login");
 app.use(passport.initialize());
 app.use(logger("dev"));
