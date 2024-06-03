@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-
+const cors = require("cors");
 const postsRouter = require("./routes/posts");
 const indexRouter = require("./routes/index");
 const mongoose = require("mongoose");
@@ -21,6 +21,7 @@ async function main() {
 }
 
 const app = express();
+app.use(cors);
 require("./config/passport-login");
 app.use(passport.initialize());
 app.use(logger("dev"));
